@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@700&display=swap");
+
+html,
+body {
+  background: #ece4db;
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+  font-family: "Ubuntu Mono", monospace;
+  /* overflow: hidden; */
+}
+h1 {
+  font-family: "Ubuntu Mono", monospace;
+}
+.thumb {
+  width: 30vh;
+  max-width: 40vw;
+  margin-left: 1.5vw;
+  margin-right: 1vw;
+  border-radius: 2rem;
+  box-shadow: 0rem 0.5rem 2rem rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  position: fixed;
+  margin: 2.5vh;
+  top: 0;
+  left: 0;
+  width: 10vw;
+}
+.logo2 {
+  position: fixed;
+  margin: 2.5vh;
+  top: 0;
+  right: 0;
+  width: 10vw;
+}
+.copyright {
+  position: fixed;
+  bottom: 0;
+  font-weight: 500;
+  text-align: center;
+}
+
+.pickRack {
+  display: flex;
+  flex-direction: row;
+}
+.item {
+  text-align: center;
+  margin-bottom: 5vh;
+}
+
+.centerDiv {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  height: 100%;
+  justify-content: center;
+}
+
+.playersBarContainer {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.masterCanvasDiv {
+  margin-bottom: 10px;
+  /* margin-top: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around; */
+}
+.playerNameTag {
+  color: azure;
+  text-align: center;
+}
+
+.sessionControlsBarContainer {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.controllBtn {
+  margin: 10px;
+  display: inline-block;
+  font-family: "Ubuntu Mono", monospace;
+  width: 100px;
+  padding: 8px;
+  border-radius: 30px;
+  color: rgb(0, 0, 0);
+  border: 3px solid rgb(0, 0, 0);
+  background-color: white;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+  filter: invert(1);
+}
+.controllBtn:hover {
+  filter: invert(0);
+}
+/* .deviceStateDiv{
+  
+} */
+
+.scenePlayerContainer {
+  /* margin: 10px; */
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.sceneQueueContainer {
+  /* margin: 10px; */
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mixerTracksContainer {
+  /* margin: 10px; */
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.mixerTracks {
+  /* margin: 10px; */
+  /* background-color: rgba(0, 0, 0, 0.9); */
+  /* padding: 10px; */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn {
+  margin: 10px;
+  display: inline-block;
+  font-family: "Ubuntu Mono", monospace;
+  width: 200px;
+  padding: 8px;
+  color: rgb(0, 0, 0);
+  border: 3px solid rgb(0, 0, 0);
+  background-color: white;
+  text-align: center;
+  outline: none;
+  text-decoration: none;
+}
+.btn:hover {
+  filter: invert(1);
+}
+
+form {
+  margin: 10px;
+
+  padding: 30px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+input {
+  margin-bottom: 20px;
+  background: chartreuse;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 4px;
+}
+input[type="text"] {
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+input[type="color"] {
+  width: 100%;
+  height: 50px;
+  padding: 0px;
+}
+
+.form-control {
+  width: 90%;
+}
+label {
+  color: white;
+}
