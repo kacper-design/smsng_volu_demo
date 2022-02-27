@@ -1,12 +1,12 @@
 {
-  "name": "zoom-clone",
+  "name": "volumetric-demo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "devStart": "nodemon server.js",
-    "build": "webpack --mode=development --entry ./src/js/app.js --output ./public/bundle.js",
-    "build_dep": "webpack  --entry ./src/js/app.js --output ./public/bundle.js"
+    "build": "webpack --mode development --entry ./src/js/app.js --output-path ./public",
+    "build_dep": "webpack  --entry ./src/js/app.js --output-path ./public"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,7 @@
     "gsap": "^3.6.0",
     "p5": "^1.2.0",
     "peer": "^0.6.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^4.4.1",
     "tone": "^14.7.77",
     "uuid": "^8.1.0"
   },
@@ -29,8 +29,8 @@
     "nodemon": "^2.0.4",
     "sockjs-client": "^1.5.0",
     "source-map-loader": "^1.0.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
   }
 }
