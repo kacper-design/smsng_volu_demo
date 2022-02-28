@@ -1,8 +1,8 @@
 import p5 from "p5";
-import { roomId, rootId, socket, mode } from "./app";
+import { roomId, rootId, socket, mode } from ".";
 import { players } from "./players";
 
-
+//EXAMPLE
 let objs = [];
 let objsNum = 360;
 const noiseScale = 0.01;
@@ -13,14 +13,15 @@ let nt = 0;
 let nR = 0;
 let nTheta = 1000;
 const palette = ["#ACDEED55", "#EAD5E855", "#84C0E755", "#38439955"];
-const drawContent = (p5) => {
-  console.log(123)
+//--------
 
+const drawContent = (p5) => {
+  
   let R = p5.map(p5.noise(nt * 0.01, nR), 0, 1, 0, maxR);
   let t = p5.map(p5.noise(nt * 0.001, nTheta), 0, 1, -360, 360);
   let x = R * p5.cos(t) + p5.width / 2;
   let y = R * p5.sin(t) + p5.height / 2;
-   objs.push(new Obj(x, y,p5));
+  objs.push(new Obj(x, y, p5));
 
   if (p5.mouseIsPressed) {
     objs.push(new Obj(p5.mouseX, p5.mouseY, p5));
@@ -42,7 +43,7 @@ const drawContent = (p5) => {
   nt++;
 };
 
-let canvasDiv;
+let bcgCanvasDiv;
 let p5CanvasInstance;
 const initP5CanvasInstance = () => {
   initCanvasDiv();
@@ -51,14 +52,13 @@ const initP5CanvasInstance = () => {
       const cnv = p5
         .createCanvas(p5.windowWidth, p5.windowHeight)
         .id("MasterCanvas")
-        .parent(canvasDiv);
-
-
-
+        .parent(bcgCanvasDiv);
+      // EXAMPLE
       p5.angleMode(p5.DEGREES);
       p5.noStroke();
       maxR = p5.max(p5.width, p5.height) * 0.45;
       p5.background("#F5F4FD");
+      //---------
     };
     p5.draw = () => drawContent(p5);
 
@@ -69,18 +69,18 @@ const initP5CanvasInstance = () => {
 };
 
 const initCanvasDiv = () => {
-  canvasDiv = document.createElement("div");
-  canvasDiv.className = "masterCanvasDiv";
-  canvasDiv.id = "masterCanvasDiv";
-  document.body.appendChild(canvasDiv);
+  bcgCanvasDiv = document.createElement("div");
+  bcgCanvasDiv.className = "bcgCanvasDiv";
+  bcgCanvasDiv.id = "bcgCanvasDiv";
+  document.body.appendChild(bcgCanvasDiv);
 };
 
 class Obj {
-  constructor(ox, oy,p5) {
-    this.init(ox, oy,p5);
+  constructor(ox, oy, p5) {
+    this.init(ox, oy, p5);
   }
 
-  init(ox, oy,p5) {
+  init(ox, oy, p5) {
     this.vel = p5.createVector(0, 0);
     this.pos = p5.createVector(ox, oy);
     this.t = p5.random(0, noiseScale);
@@ -117,18 +117,8 @@ class Obj {
 
   display(p5) {
     p5.fill(this.c);
-
     p5.circle(this.pos.x, this.pos.y, this.d);
   }
 }
 
-function func(t, num) {
-  let a = 360 / num;
-  let A = cos(a);
-  let b = acos(cos(num * t));
-  let B = cos(a - b / num);
-
-  return A / B;
-}
-
-export { initP5CanvasInstance };
+export { initP5CanvasInstance,bcgCanvasDiv };

@@ -1,10 +1,11 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-import { myVideo } from "./app";
+import { myVideo } from ".";
 
 // init
 let camera, scene, texture, geometry, material, mesh, renderer, controls;
+let threeCanvasRender;
 const rendererOptions = { antialias: true, alpha: true };
 
 const initThreeCanvas = () => {
@@ -30,11 +31,16 @@ const initThreeCanvas = () => {
   scene.add(mesh);
 
   renderer = new THREE.WebGLRenderer(rendererOptions);
+  threeCanvasRender = renderer.domElement;
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+  document.body.appendChild(threeCanvasRender);
+ 
+
   renderer.domElement.classList.add("threeDiv");
-  console.log(renderer.domElement);
-  controls = new OrbitControls(camera, renderer.domElement);
+
+
+  initDivOrbitControl();
+  controls = new OrbitControls(camera, threeDivOrbitControl);
 
  
   controls.update();
@@ -52,4 +58,13 @@ const animate = (time) => {
 
   renderer.render(scene, camera);
 };
-export { initThreeCanvas };
+
+let threeDivOrbitControl;
+const initDivOrbitControl = () => {
+  threeDivOrbitControl = document.createElement("div");
+  threeDivOrbitControl.className = "three-div-orbit-control";
+  threeDivOrbitControl.id = "three-div-orbit-control";
+  document.body.appendChild(threeDivOrbitControl);
+};
+
+export { initThreeCanvas,threeCanvasRender,threeDivOrbitControl };

@@ -40,6 +40,7 @@ const io = require("socket.io")(server);
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
+//ROUTES
 app.get("/demo/", (req, res) => {
   res.redirect(`/demo/${uuidV4()}`);
 });
@@ -47,7 +48,6 @@ app.get("/demo/", (req, res) => {
 app.get("/demo/:room", (req, res) => {
   res.render("room", { roomId: req.params.room });
 });
-
 
 
 const handleJoined = (roomId, userId, socket) => {

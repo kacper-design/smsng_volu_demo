@@ -1,7 +1,7 @@
 import gsap from "gsap/gsap-core";
 import * as Tone from "tone";
 import { gui } from "./devUI";
-import { roomId, rootId, socket, mode } from "./app";
+import { roomId, rootId, socket, mode } from ".";
 
 const state = {
   gain: 1,
