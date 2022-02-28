@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>PAINT WITH VOICE</title>
+    <title>Volumetric Demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
       rel="stylesheet"
@@ -13,111 +13,11 @@
     />
   </head>
   <body>
-    <div class="logo">
-      <img src="/src/ixd-logo.svg" />
-    </div>
-    <div class="logo2">
-      <img src="/src/ixd-logo.svg" />
-    </div>
-
+    <script src="./homeHelpers.js" defer></script>
     <div class="centerDiv">
-      <h2>Paint With Voice Demo</h2>
-      <!-- <form>
-        <input
-          type="text"
-          oninput="update()"
-          id="room-name"
-          placeholder="Enter the room name"
-        />
-      </form> -->
-      <h4>Select the Mood</h4>
-      <div class="pickRack" id="rack">
-        <div>
-          <div class="item" id="modeA">
-            <div>
-              <img src="/src/energetic.png" class="thumb" />
-            </div>
-            <div class="controllBtn">ENERGETIC</div>
-          </div>
-          <div class="item" id="modeC">
-            <div><img src="/src/passionate.png" class="thumb" /></div>
-            <div class="controllBtn">PASSIONATE</div>
-          </div>
-        </div>
-        <div>
-          <div class="item" id="modeD">
-            <div><img src="/src/friendly.png" class="thumb" /></div>
-            <div class="controllBtn">FRIENDLY</div>
-          </div>
-          <div class="item" id="modeB">
-            <div><img src="/src/dreamy.png" class="thumb" /></div>
-            <div class="controllBtn">DREAMY</div>
-          </div>
-        </div>
-      </div>
-      <div class="copyright">
-        <h5>© Innovation by Design, 2021</h5>
-      </div>
+      <h2>Volumetric Demo</h2>
+      <div class="btn" onclick="startExperience(0)">ENTER</div>
+      <div class="copyright"><h5>© SAMSUNG E&I 2022</h5></div>
     </div>
-
-    <script>
-      //room name
-      function uuidv4() {
-        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-          /[xy]/g,
-          function (c) {
-            var r = (Math.random() * 16) | 0,
-              v = c == "x" ? r : (r & 0x3) | 0x8;
-            return v.toString(16);
-          }
-        );
-      }
-      let roomName = uuidv4();
-      const roomNameInput = document.getElementById("room-name");
-      const update = () => (roomName = roomNameInput.value);
-      console.log(roomName);
-      //responsivmess
-      const setup = () => {
-        window.addEventListener("resize", handleWindowResize);
-        handleWindowResize();
-      };
-
-      const rack = document.getElementById("rack");
-      console.log(rack);
-      const handleWindowResize = () => {
-        const width = window.innerWidth;
-        console.log(width);
-        if (width < 1000) {
-          if (rack) {
-            //rack.style.flexDirection = "column";
-          }
-        } else {
-          //rack.style.flexDirection = "row";
-        }
-      };
-
-      setup();
-      //buttons
-      document
-        .getElementById("modeA")
-        .addEventListener("click", () =>
-          window.location.replace(`/paint/${roomName}?mode=0`)
-        );
-      document
-        .getElementById("modeB")
-        .addEventListener("click", () =>
-          window.location.replace(`/paint/${roomName}?mode=1`)
-        );
-      document
-        .getElementById("modeC")
-        .addEventListener("click", () =>
-          window.location.replace(`/paint/${roomName}?mode=2`)
-        );
-      document
-        .getElementById("modeD")
-        .addEventListener("click", () =>
-          window.location.replace(`/paint/${roomName}?mode=3`)
-        );
-    </script>
   </body>
 </html>

@@ -1,20 +1,21 @@
-import { addStream, removePlayer } from "./audio";
-import {
-  displayInstance,
-  handleParamsChange,
-  handleStateUpdate,
-} from "./display";
+import { addPlayer, removePlayer, players } from "./players";
+import { initP5CanvasInstance } from "./p5Canvas";
+import { initThreeCanvas } from "./threeCanvas";
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const mode = urlParams.get("mode");
+
+const videoGrid = document.getElementById("video-grid"); // the div where the video streams are added
 const socket = io("/");
 let roomId;
-let rootId;
-const videoGrid = document.getElementById("video-grid");
-const myPeer = new Peer(undefined, {
-  //host: "/", //----
+
+const myPeerOptions = {
+  host: "/", //----
   debug: 2,
-  secure: true, //----//----// uncomment for deployment
-  initiator: true, // uncomment for deployment
-  //port: "3001", //----
+  //secure: true, //----//----// uncomment for deployment
+  //initiator: true, // uncomment for deployment
+  port: "3001", //----
   config: {
     iceServers: [
       { url: "stun:stun1.l.google.com:19302?transport=udp" }, //stun.nextcloud.com:443
@@ -26,30 +27,27 @@ const myPeer = new Peer(undefined, {
       },
     ],
   },
-});
-console.log(myPeer);
+};
+const myPeer = new Peer(undefined, myPeerOptions);
+const rootId = myPeer ? myPeer.id : null;
 const myVideo = document.createElement("video");
 myVideo.muted = true;
 const peers = {};
+
 navigator.mediaDevices
   .getUserMedia({
-    video: false, //true,
+    video: true,
     audio: true,
   })
   .then((stream) => {
     console.log(`My stream ID is: ${stream.id}`);
     console.log(`My client ID is: ${myPeer.id}`);
-    rootId = myPeer.id;
-    const persist = setInterval(() => {
-      rootId = myPeer.id;
-      if (rootId != null) {
-        console.log("stop");
-        clearInterval(persist);
-      }
-      console.log(rootId);
-    }, 500);
+
     addVideoStream(myVideo, stream);
-    displayInstance(); //P5 canvas
+    addPlayer(stream, myPeer.id, "root");
+
+    initThreeCanvas();
+    initP5CanvasInstance(); //P5 canvas
 
     myPeer.on("call", (call) => {
       try {
@@ -69,8 +67,7 @@ navigator.mediaDevices
     });
 
     socket.on("user-connected", ({ userId, socketID }) => {
-      console.log("SOCKET.IO: user-connected!");
-      console.log("users id: " + socketID);
+      console.log(`User is trying to connect! ID: ${socketID}`);
       setTimeout(connectToNewUser, 1500, userId, stream, socketID);
     });
   });
@@ -84,19 +81,19 @@ socket.on("user-disconnected", (userId) => {
   }
 });
 
-socket.on("paramsChange", ({ _params }) => handleParamsChange({ _params }));
-socket.on("stateUpdate", ({ state, userId }) =>
-  handleStateUpdate({ state, userId })
-);
+//socket.on("paramsChange", ({ _params }) => handleParamsChange({ _params }));
+// socket.on("stateUpdate", ({ state, userId }) =>
+//   handleStateUpdate({ state, userId })
+// );
 
 myPeer.on("open", (id) => {
   roomId = ROOM_ID;
   socket.emit("join-room", ROOM_ID, id);
-  console.log(`Room ID: ${ROOM_ID}`);
+  console.log(`Room is open. Room ID: ${ROOM_ID}`);
 });
 
-function connectToNewUser(userId, stream, socketID) {
-  console.log("SOCKET ID: " + socketID);
+const connectToNewUser = (userId, stream, socketID) => {
+  console.log(`Connecting new user. ID:${socketID}`);
 
   if (!peers[userId]) {
     console.log(`connecting to the new user: ${userId}`);
@@ -107,30 +104,32 @@ function connectToNewUser(userId, stream, socketID) {
       console.log("Error while calling myPeer");
       console.log(error);
     }
+
     const video = document.createElement("video");
     video.muted = false; //change here
 
     call.on("stream", (userVideoStream) => {
-      addVideoStream(video, userVideoStream, userId);
+      addVideoStream(video, userVideoStream);
+      const duplicate = players.find((player) => player.owner == userId);
+      !duplicate ? addPlayer(video.srcObject, userId) : null;
     });
+
     call.on("close", () => {
       video.remove();
     });
 
     peers[userId] = call;
+    console.log(`Peers updated:  `);
     console.log(peers);
   }
-}
+};
 
-function addVideoStream(video, stream, peer, socketID) {
-  console.log(peer);
-  let streamOwnerId;
-  if (peer) streamOwnerId = peer;
+const addVideoStream = (video, stream) => {
   video.srcObject = stream;
-  addStream(stream, streamOwnerId);
   video.addEventListener("loadedmetadata", () => {
     video.play();
   });
-  //videoGrid.append(video);
-}
-export { socket, roomId, rootId };
+  videoGrid.append(video);
+};
+
+export { socket, roomId, rootId, mode, myVideo };
